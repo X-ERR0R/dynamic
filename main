@@ -1,0 +1,57 @@
+#include <stdlib.h>
+
+typedef char* dynamic;
+
+typedef struct 
+{ 
+        dynamic massive;
+        size_t lenght;
+        size_t nooe;
+} dynamicarg;
+
+dynamic new_dynamic(size_t size)
+{
+
+        return malloc(size);
+}
+dynamic add_dynamic(dynamic massive,size_t* lenght,size_t* nooe,char add_element)
+{
+        if((*lenght)>(*nooe))
+        {
+        massive[(*nooe)]=add_element;
+        (*nooe)+=1;
+        return massive;
+        }
+        else
+        {
+                dynamic arg=malloc(((*lenght)++));
+                if (arg==NULL){return NULL;}
+                for(int i=0;i<((*lenght)-1);i++)
+                {
+                        arg[i]=massive[i];
+                }
+                free(massive);
+                arg[(*lenght)-1]=add_element;
+
+                (*nooe)+=1;
+                return arg;
+        }
+}
+
+dynamic remove_dynamic(dynamic massive,size_t index,size_t* nooe,size_t* lenght)
+{
+        int i=0;
+        char* arg=malloc((*lenght)-1);
+        for(;i<(*lenght);i++)
+        {
+                if(i<index)
+                arg[i]=massive[i];
+                else
+                arg[i]=massive[i+1];       
+        }
+        *lenght-=1;
+        *nooe-=1;
+        free(massive);
+        return arg;
+
+}
